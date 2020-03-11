@@ -10,6 +10,6 @@ class Polygone{
     public ArrayList<int[]> cordes;
 
     public boolean validecorde(int i, int j){
-        ArrayList
+        //ArrayList
     }
 }
