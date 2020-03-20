@@ -9,7 +9,7 @@ public class EssaisSuccessifs {
 
 /*Procédure essaisSuccessifs
 param : un Polygone
-    Si on ne peux plus faire de corde : // à remanier pour inclure dans l'autre boucle
+    Si on ne peux plus faire de corde : // à remanier pour inclure dans l'autre boucle a
         enregistrer la config des cordes du Polygone
         Fin de procédure
     FSi
