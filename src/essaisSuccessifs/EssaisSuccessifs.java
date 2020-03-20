@@ -19,7 +19,7 @@ param : un Polygone
             lancer essaisSuccessifs sur le nouveau Polygone qui a la corde en plus
         FPour
     FPour
-
+Fin
  */
 
     public static void main (String [] args){
