@@ -1,6 +1,9 @@
 package essaisSuccessifs;
 
-import Plot.Plot;
+
+
+import Plotting.PlotPolygoneCordes;
+import org.jfree.ui.RefineryUtilities;
 import structure.Corde;
 import structure.Polygone;
 
@@ -77,28 +80,10 @@ public static void toutessol(int sommet1){
 
         System.out.println(sol1);
 
-        Plot plot = Plot.plot(Plot.plotOpts().
-                title("Polygone et cordes").
-                legend(Plot.LegendFormat.BOTTOM)).
-                xAxis("x", Plot.axisOpts().
-                        range(0, 30)).
-                yAxis("y", Plot.axisOpts().
-                        range(0, 30)).
-                series("Polygone", Plot.data().
-                                xy(listX,listY),
-                        Plot.seriesOpts().
-                                color(Color.BLACK)).
-                series("Cordes", Plot.data().
-                        xy(polygone.getSommetX(sol1.get(0).sommet1), polygone.getSommetY(sol1.get(1).sommet1)).
-                        xy(polygone.getSommetX(sol1.get(0).sommet2), polygone.getSommetY(sol1.get(1).sommet2)),
-                        Plot.seriesOpts().
-                                color(Color.BLUE));
-
-        try {
-            plot.save("Polygone_Cordes_toutessol", "png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final PlotPolygoneCordes demo = new PlotPolygoneCordes("XY Series Demo");
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
     }
 
 }
