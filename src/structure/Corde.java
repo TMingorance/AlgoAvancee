@@ -3,9 +3,9 @@ package structure;
 import java.util.Objects;
 
 public class Corde {
-    int sommet1;
-    int sommet2;
-    double longueur;
+    public int sommet1;
+    public int sommet2;
+    public double longueur;
 
     public Corde(int sommet1, int sommet2, double longueur) {
         this.sommet1 = sommet1;

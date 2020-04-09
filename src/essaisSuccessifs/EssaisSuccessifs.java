@@ -1,8 +1,11 @@
 package essaisSuccessifs;
 
+import Plot.Plot;
 import structure.Corde;
 import structure.Polygone;
 
+import java.awt.*;
+import java.io.IOException;
 import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
@@ -10,8 +13,8 @@ import static java.lang.Integer.min;
 
 public class EssaisSuccessifs {
 
-    private static int coord [] [] = {{0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}, {0,10}};
-    private static Polygone polygone = new Polygone(10, coord, new ArrayList<Corde>());
+    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}, {0,10}};
+    private static Polygone polygone = new Polygone(7, coord, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
 /*Procédure essaisSuccessifs
 param : un Polygone
@@ -45,11 +48,57 @@ public static void toutessol(int sommet1){
 }
 
     public static void main (String [] args){
-        //test
+        //tests
+        /*
         polygone.ajouterCorde(2,5);
         System.out.println(polygone);
         polygone.supprCorde(2,5);
         System.out.println(polygone);
+        */
+
+        ArrayList<Double> listX = new ArrayList<Double>();
+        ArrayList<Double> listY = new ArrayList<Double>();
+        for(int i = 0 ; i < polygone.nbSommets ; i++) {
+            listX.add((double)polygone.sommets[i][0]);
+            listY.add((double)polygone.sommets[i][1]);
+        }
+        listX.add((double)polygone.sommets[0][0]); //on remet le premier point pour faire un polygone fermé
+        listY.add((double)polygone.sommets[0][1]);
+
+        //System.out.println(listX,listY);
+        //*********Execution************
+        toutessol(0);
+        //******************************
+
+        System.out.println(tabSol);
+
+        ArrayList <Corde> sol1;
+        sol1 = tabSol.get(0);
+
+        System.out.println(sol1);
+
+        Plot plot = Plot.plot(Plot.plotOpts().
+                title("Polygone et cordes").
+                legend(Plot.LegendFormat.BOTTOM)).
+                xAxis("x", Plot.axisOpts().
+                        range(0, 30)).
+                yAxis("y", Plot.axisOpts().
+                        range(0, 30)).
+                series("Polygone", Plot.data().
+                                xy(listX,listY),
+                        Plot.seriesOpts().
+                                color(Color.BLACK)).
+                series("Cordes", Plot.data().
+                        xy(polygone.getSommetX(sol1.get(0).sommet1), polygone.getSommetY(sol1.get(1).sommet1)).
+                        xy(polygone.getSommetX(sol1.get(0).sommet2), polygone.getSommetY(sol1.get(1).sommet2)),
+                        Plot.seriesOpts().
+                                color(Color.BLUE));
+
+        try {
+            plot.save("Polygone_Cordes_toutessol", "png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

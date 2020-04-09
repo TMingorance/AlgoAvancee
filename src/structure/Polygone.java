@@ -6,12 +6,12 @@ import java.util.Arrays;
 
 public class Polygone{
     public int nbSommets;
-    public int [][] sommets;
+    public double [][] sommets;
     public ArrayList<Corde> cordes;
 
-    public Polygone(int nbSommets, int [][] sommets,  ArrayList <Corde> cordes) {
+    public Polygone(int nbSommets, double [][] sommets,  ArrayList <Corde> cordes) {
         this.nbSommets = nbSommets;
-        this.sommets = new int [nbSommets] [2];
+        this.sommets = sommets;
         this.cordes = cordes;
     }
 
@@ -22,6 +22,14 @@ public class Polygone{
                 ", sommets=" + Arrays.toString(sommets) +
                 ", cordes=" + cordes +
                 '}';
+    }
+
+    public double getSommetX (int sommet){
+        return this.sommets[sommet] [0];
+    }
+
+    public double getSommetY (int sommet){
+        return this.sommets[sommet] [1];
     }
 
     public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
