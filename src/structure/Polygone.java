@@ -33,7 +33,10 @@ public class Polygone{
     }
 
     public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
-        for(Corde corde : cordes){
+        if(Math.abs(i - j) <= 1){
+            return false;
+        }
+        for(Corde corde : this.cordes){
             if ((corde.sommet1 == i && corde.sommet2 == j) || corde.sommet1 == j && corde.sommet2 == i ){
                 return false;
             }
