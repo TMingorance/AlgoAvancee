@@ -22,6 +22,8 @@ param : un Polygone
 Fin
  */
 
+
+
     public static void main (String [] args){
 
     }
