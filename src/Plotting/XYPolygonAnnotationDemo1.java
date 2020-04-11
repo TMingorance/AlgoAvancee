@@ -73,7 +73,7 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
 
 
         XYPolygonAnnotation a = new XYPolygonAnnotation(polygone.convertSommetsToDoubleList(), null, new Color(0,220,0,0),
-                new Color(0, 0, 0, 200));
+                new Color(0, 0, 0, 100));
         a.setToolTipText("Polygone");
         renderer.addAnnotation(a, Layer.BACKGROUND);
 
@@ -81,11 +81,12 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
         int i = 0;
 
         for(double[] doubles : arrayList){
-            XYPolygonAnnotation cordeAnnot = new XYPolygonAnnotation(doubles, null, new Color(220,0,0,0),
-                    new Color(220,0,0,0));
+            System.out.println("Les cordes sont : " + doubles[0] + ", " + doubles[1] + ", " + doubles[2] + ", " + doubles[3]);
+            XYPolygonAnnotation cordeAnnot = new XYPolygonAnnotation(doubles, null, new Color(220,0,0,200),
+                    new Color(220,0,0,200));
             cordeAnnot.setToolTipText("Corde " + i);
             renderer.addAnnotation(cordeAnnot, Layer.FOREGROUND);
-            System.out.println("Les cordes sont : " + cordeAnnot);
+
             i++;
         }
         return chart;

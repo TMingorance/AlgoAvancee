@@ -47,9 +47,13 @@ public class Polygone{
         int i = 0;
         for(Corde corde : sol1){
             doubles [0] = this.getSommetX(corde.sommet1);
+            System.out.println("doubles[0] : " + doubles [0]);
             doubles [1] = this.getSommetY(corde.sommet1);
+            System.out.println("doubles[1] : " + doubles [1]);
             doubles [2] = this.getSommetX(corde.sommet2);
+            System.out.println("doubles[2] : " + doubles [2]);
             doubles [3] = this.getSommetY(corde.sommet2);
+            System.out.println("doubles[3] : " + doubles [3]);
             arrayList.add(doubles);
             doubles [0] = 0;
             doubles [1] = 0;
