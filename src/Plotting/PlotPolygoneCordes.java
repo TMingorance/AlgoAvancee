@@ -7,8 +7,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.chart.annotations.XYPolygonAnnotation;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
+import structure.Corde;
+import structure.Polygone;
+
+import java.util.ArrayList;
 
 public class PlotPolygoneCordes extends ApplicationFrame {
 
@@ -17,25 +22,34 @@ public class PlotPolygoneCordes extends ApplicationFrame {
      *
      * @param title  the frame title.
      */
-    public PlotPolygoneCordes(final String title) {
+
+    private Polygone polygone;
+
+    public PlotPolygoneCordes(final String title, Polygone polygone) {
 
         super(title);
-        final XYSeries series = new XYSeries("Random Data");
-        series.add(1.0, 500.2);
-        series.add(5.0, 694.1);
-        series.add(4.0, 100.0);
-        series.add(12.5, 734.4);
-        series.add(17.3, 453.2);
-        series.add(21.2, 500.2);
-        series.add(21.9, null);
-        series.add(25.6, 734.4);
-        series.add(30.0, 453.2);
-        final XYSeriesCollection data = new XYSeriesCollection(series);
+        final XYSeries seriesPolygone = new XYSeries("Polygone");
+        /*for(int i = 0; i < polygone.nbSommets; i++){
+            seriesPolygone.add(polygone.sommets[i] [0], polygone.sommets[i] [1]);
+        }*/
+
+        seriesPolygone.add(0.0, 5.2);
+        seriesPolygone.add(3.0, 5.2);
+        seriesPolygone.add(2.0,4.5);
+
+        ArrayList <XYSeries> cordeSeries = new ArrayList<XYSeries>();
+        for (Corde corde : polygone.cordes){
+            final XYSeries seriesCorde = new XYSeries("Corde " + corde.sommet1 + ", " + corde.sommet2);
+            seriesCorde.add(polygone.getSommetX(corde.sommet1), polygone.getSommetY(corde.sommet1));
+            seriesCorde.add(polygone.getSommetX(corde.sommet2), polygone.getSommetY(corde.sommet2));
+        }
+
+        final XYSeriesCollection PolygoneData = new XYSeriesCollection(seriesPolygone);
         final JFreeChart chart = ChartFactory.createXYLineChart(
-                "XY Series Demo",
+                "Polygone",
                 "X",
                 "Y",
-                data,
+                PolygoneData,
                 PlotOrientation.VERTICAL,
                 true,
                 true,

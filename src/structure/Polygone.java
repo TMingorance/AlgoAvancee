@@ -32,6 +32,44 @@ public class Polygone{
         return this.sommets[sommet] [1];
     }
 
+    public double [] convertSommetsToDoubleList (){
+        double [] doubles = new double[2*this.nbSommets];
+        for(int i = 0; i < this.nbSommets; i++){
+            doubles[2*i] = this.getSommetX(i);
+            doubles[2*i +1] = this.getSommetY(i);
+        }
+        return doubles;
+    }
+
+    public ArrayList<double[]> convertSommetsToDoubleList(ArrayList<Corde> sol1) {
+        double [] doubles = {0.0, 0.0, 0.0, 0.0};
+        ArrayList <double []> arrayList = new ArrayList<double[]>();
+        int i = 0;
+        for(Corde corde : sol1){
+            doubles [0] = this.getSommetX(corde.sommet1);
+            doubles [1] = this.getSommetY(corde.sommet1);
+            doubles [2] = this.getSommetX(corde.sommet2);
+            doubles [3] = this.getSommetY(corde.sommet2);
+            arrayList.add(doubles);
+            doubles [0] = 0;
+            doubles [1] = 0;
+            doubles [2] = 0;
+            doubles [3] = 0;
+
+            i++;
+        }
+        return arrayList;
+    }
+
+    public ArrayList <double []> getCordeDoubleListArrayList (){
+        ArrayList <double []> arrayList = new ArrayList<double []>();
+        for (Corde corde : this.cordes){
+            double [] doubles = {this.getSommetX(corde.sommet1), this.getSommetY(corde.sommet1), this.getSommetX(corde.sommet2), this.getSommetY(corde.sommet2)};
+            arrayList.add(doubles);
+        }
+        return arrayList;
+    }
+
     public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
         if(Math.abs(i - j) <= 1){
             return false;
@@ -57,4 +95,6 @@ public class Polygone{
         cordes.remove(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
                 Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2))));
     }
+
+
 }

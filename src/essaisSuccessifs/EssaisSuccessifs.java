@@ -2,15 +2,20 @@ package essaisSuccessifs;
 
 
 
+import Plotting.PlotPoly;
 import Plotting.PlotPolygoneCordes;
+import Plotting.XYPolygonAnnotationDemo1;
 import org.jfree.ui.RefineryUtilities;
 import structure.Corde;
 import structure.Polygone;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.StandardSocketOptions;
+import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 import static java.lang.Integer.min;
 
@@ -80,10 +85,11 @@ public static void toutessol(int sommet1){
 
         System.out.println(sol1);
 
-        final PlotPolygoneCordes demo = new PlotPolygoneCordes("XY Series Demo");
-        demo.pack();
-        RefineryUtilities.centerFrameOnScreen(demo);
-        demo.setVisible(true);
+            XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
+                    "XYPolygonAnnotationDemo1", polygone, sol1);
+            demo.pack();
+            RefineryUtilities.centerFrameOnScreen(demo);
+            demo.setVisible(true);
     }
 
 }
