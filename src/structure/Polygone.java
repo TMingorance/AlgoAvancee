@@ -82,6 +82,9 @@ public class Polygone{
         if(Math.abs(i - j) <= 1){
             return false;
         }
+        if(Math.abs(i - j) >= this.nbSommets - 1){
+            return false;
+        }
         for(Corde corde : this.cordes){
             if ((corde.sommet1 == i && corde.sommet2 == j) || corde.sommet1 == j && corde.sommet2 == i ){
                 return false;
