@@ -42,10 +42,9 @@ public class Polygone{
     }
 
     public ArrayList<double[]> convertSommetsToDoubleList(ArrayList<Corde> sol1) {
-        double [] doubles = {0.0, 0.0, 0.0, 0.0};
         ArrayList <double []> arrayList = new ArrayList<double[]>();
-        int i = 0;
         for(Corde corde : sol1){
+            double [] doubles = {0.0, 0.0, 0.0, 0.0};
             doubles [0] = this.getSommetX(corde.sommet1);
             System.out.println("doubles[0] : " + doubles [0]);
             doubles [1] = this.getSommetY(corde.sommet1);
@@ -55,12 +54,17 @@ public class Polygone{
             doubles [3] = this.getSommetY(corde.sommet2);
             System.out.println("doubles[3] : " + doubles [3]);
             arrayList.add(doubles);
-            doubles [0] = 0;
-            doubles [1] = 0;
-            doubles [2] = 0;
-            doubles [3] = 0;
+        }
+        return arrayList;
+    }
 
-            i++;
+    public ArrayList<double[][]> convertSommetsToDoubleListForData(ArrayList<Corde> sol1) {
+        ArrayList <double [][]> arrayList = new ArrayList<double[][]>();
+        for(Corde corde : sol1){
+        double[] x1 = new double[]{this.getSommetX(corde.sommet1), this.getSommetX(corde.sommet2)};
+        double[] y1 = new double[]{this.getSommetY(corde.sommet1), this.getSommetY(corde.sommet2)};
+        double[][] data = new double[][]{x1, y1};
+        arrayList.add(data);
         }
         return arrayList;
     }
