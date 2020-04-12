@@ -1,5 +1,7 @@
 package structure;
 
+import essaisSuccessifs.EssaisSuccessifs;
+
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Arrays;
@@ -8,11 +10,16 @@ public class Polygone{
     public int nbSommets;
     public double [][] sommets;
     public ArrayList<Corde> cordes;
+    public ArrayList<Corde> cordesPossibles;
+    public ArrayList<Integer> indexCordes  = new ArrayList<Integer>(); // pour fonctionner avec la liste des cordes possibles
+
 
     public Polygone(int nbSommets, double [][] sommets,  ArrayList <Corde> cordes) {
         this.nbSommets = nbSommets;
         this.sommets = sommets;
         this.cordes = cordes;
+        this.cordesPossibles = new ArrayList<Corde>();
+        calculCordesPossibles();
     }
 
     @Override
@@ -22,6 +29,28 @@ public class Polygone{
                 ", sommets=" + Arrays.toString(sommets) +
                 ", cordes=" + cordes +
                 '}';
+    }
+
+    private ArrayList<Corde> calculCordesPossibles(){
+        ArrayList<Corde> arrayList = new ArrayList<Corde>();
+        boolean cordeNonDoublon = true;
+        for (int i = 0; i < nbSommets; i++){
+            for (int j = 0; j < nbSommets; j++){
+                if (validecordePolygoneVide(i,j)){
+                    for(Corde corde : cordesPossibles){
+                        if((corde.sommet1 == i && corde.sommet2 == j) || (corde.sommet1 == j && corde.sommet2 == i)) { //évitons les doublons
+                            cordeNonDoublon = false;
+                            break; //est-ce une mauvaise pratique ?
+                        }
+                    }
+                    if (cordeNonDoublon){
+                        ajouterCordeACordesPossibles(i, j);
+                    }
+                }
+                cordeNonDoublon = true;
+            }
+        }
+        return arrayList;
     }
 
     public double getSommetX (int sommet){
@@ -97,8 +126,50 @@ public class Polygone{
         return true;
     }
 
+    public boolean validecorde(Corde corde){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
+        int i = corde.sommet1;
+        int j = corde.sommet2;
+
+        if(Math.abs(i - j) <= 1){
+            return false;
+        }
+        if(Math.abs(i - j) >= this.nbSommets - 1){
+            return false;
+        }
+        for(Corde cordePolygone : this.cordes){
+            if ((cordePolygone.sommet1 == i && cordePolygone.sommet2 == j) || (cordePolygone.sommet1 == j && cordePolygone.sommet2 == i) ){
+                return false;
+            }
+            if ((cordePolygone.sommet1 > Integer.min(i,j) && cordePolygone.sommet1 < Integer.max(i,j) && (cordePolygone.sommet2 > Integer.max(i,j) || cordePolygone.sommet2 < Integer.min(i,j))) //si a.sommet1 in [min(i,j), max(i,j)] && a.sommet2 in [min(i,j), max(i,j)] c'est OK
+                    || ((cordePolygone.sommet1 < Integer.min(i,j) || cordePolygone.sommet1 > Integer.max(i,j)) && (cordePolygone.sommet2 > Integer.min(i,j) && cordePolygone.sommet2 < Integer.max(i,j)))){//si a.sommet1 not in [min(i,j), max(i,j)] && a.sommet2 not in [min(i,j), max(i,j)], c'est OK, sinon, non
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean validecordePolygoneVide(int i, int j){ //Méthode servant à remplir cordesPossibles
+        if(Math.abs(i - j) <= 1){
+            return false;
+        }
+        if(Math.abs(i - j) >= this.nbSommets - 1){
+            return false;
+        }
+        return true;
+    }
+
     public void ajouterCorde(int sommet1, int sommet2){
         cordes.add(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
+                Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2)))); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
+    }
+
+    public void ajouterCorde(Corde corde){
+        cordes.add(corde); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
+        //indexCordes.add()
+    }
+
+    public void ajouterCordeACordesPossibles(int sommet1, int sommet2){
+        cordesPossibles.add(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
                 Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2)))); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
     }
 
@@ -107,5 +178,8 @@ public class Polygone{
                 Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2))));
     }
 
+    public void supprCorde(Corde corde){
+        cordes.remove(corde);
+    }
 
 }

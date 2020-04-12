@@ -21,9 +21,13 @@ import static java.lang.Integer.min;
 
 public class EssaisSuccessifs {
 
+    private final static int nbSommets = 5;
+
     private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {22,12}, {0,10}};
-    private static Polygone polygone = new Polygone(5, coord, new ArrayList<Corde>());
+    private static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
+
+
 /*Procédure essaisSuccessifs
 param : un Polygone
     Si on ne peux plus faire de corde : // à remanier pour inclure dans l'autre boucle a
@@ -40,22 +44,21 @@ Fin
  */
 
 public static void toutessol(int nbCordes){
-    for(int sommet1 = 0; sommet1 < polygone.nbSommets; sommet1++){
-        for (int sommet2 = 0; sommet2 < polygone.nbSommets; sommet2++) {
-            if (polygone.validecorde(sommet1, sommet2)) {
-                polygone.ajouterCorde(sommet1, sommet2);
-                if (polygone.cordes.size() >= polygone.nbSommets - 3) {
-                    tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
-                } else {
-                    toutessol(nbCordes + 1);
-                }
-                polygone.supprCorde(sommet1, sommet2);
+    for(Corde corde : polygone.cordesPossibles){
+        if (polygone.validecorde(corde)) {
+            polygone.ajouterCorde(corde);
+            if (polygone.cordes.size() >= polygone.nbSommets - 3) {
+                tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
+            } else {
+                toutessol(nbCordes + 1);
             }
+            polygone.supprCorde(corde);
         }
     }
 }
 
     public static void main (String [] args){
+
         //tests
         /*
         polygone.ajouterCorde(2,5);
@@ -91,6 +94,8 @@ public static void toutessol(int nbCordes){
             //RefineryUtilities.centerFrameOnScreen(demo);
             demo.setVisible(true);
         }
+
+        System.out.println("Cordes possibles : " + polygone.cordesPossibles);
 
     }
 
