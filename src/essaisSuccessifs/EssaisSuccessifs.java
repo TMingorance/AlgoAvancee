@@ -21,8 +21,8 @@ import static java.lang.Integer.min;
 
 public class EssaisSuccessifs {
 
-    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}, {0,10}};
-    private static Polygone polygone = new Polygone(7, coord, new ArrayList<Corde>());
+    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {22,12}, {0,10}};
+    private static Polygone polygone = new Polygone(5, coord, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
 /*Procédure essaisSuccessifs
 param : un Polygone
@@ -39,15 +39,15 @@ param : un Polygone
 Fin
  */
 
-public static void toutessol(int sommet1){
-    if (sommet1 < polygone.nbSommets) {
+public static void toutessol(int nbCordes){
+    for(int sommet1 = 0; sommet1 < polygone.nbSommets; sommet1++){
         for (int sommet2 = 0; sommet2 < polygone.nbSommets; sommet2++) {
             if (polygone.validecorde(sommet1, sommet2)) {
                 polygone.ajouterCorde(sommet1, sommet2);
                 if (polygone.cordes.size() >= polygone.nbSommets - 3) {
                     tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
                 } else {
-                    toutessol(sommet1 + 1);
+                    toutessol(nbCordes + 1);
                 }
                 polygone.supprCorde(sommet1, sommet2);
             }
@@ -64,7 +64,7 @@ public static void toutessol(int sommet1){
         System.out.println(polygone);
         */
 
-        ArrayList<Double> listX = new ArrayList<Double>();
+       /* ArrayList<Double> listX = new ArrayList<Double>();
         ArrayList<Double> listY = new ArrayList<Double>();
         for(int i = 0 ; i < polygone.nbSommets ; i++) {
             listX.add((double)polygone.sommets[i][0]);
@@ -73,23 +73,25 @@ public static void toutessol(int sommet1){
         listX.add((double)polygone.sommets[0][0]); //on remet le premier point pour faire un polygone fermé
         listY.add((double)polygone.sommets[0][1]);
 
-        //System.out.println(listX,listY);
+        //System.out.println(listX,listY);*/
         //*********Execution************
-        toutessol(0);
+        toutessol(1);
         //******************************
 
         System.out.println(tabSol);
 
-        ArrayList <Corde> sol1;
-        sol1 = tabSol.get(0);
+        System.out.println("Nb de solutions : " + tabSol.size());
 
-        System.out.println(sol1);
+        //System.out.println(sol1);
 
+        for(ArrayList<Corde> sol : tabSol) {
             XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
-                    "XYPolygonAnnotationDemo1", polygone, sol1);
+                    "XYPolygonAnnotationDemo1", polygone, sol);
             demo.pack();
-            RefineryUtilities.centerFrameOnScreen(demo);
+            //RefineryUtilities.centerFrameOnScreen(demo);
             demo.setVisible(true);
+        }
+
     }
 
 }
