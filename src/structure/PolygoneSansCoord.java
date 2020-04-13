@@ -1,22 +1,17 @@
 package structure;
 
-import essaisSuccessifs.EssaisSuccessifs;
-
 import java.util.ArrayList;
-import java.lang.Math;
 import java.util.Arrays;
 
-public class Polygone{
+public class PolygoneSansCoord {
     public int nbSommets;
-    public double [][] sommets;
     public ArrayList<Corde> cordes;
     public ArrayList<Corde> cordesPossibles;
     public ArrayList<Integer> indexCordes  = new ArrayList<Integer>(); // pour fonctionner avec la liste des cordes possibles
 
 
-    public Polygone(int nbSommets, double [][] sommets,  ArrayList <Corde> cordes) {
+    public PolygoneSansCoord(int nbSommets, ArrayList <Corde> cordes) {
         this.nbSommets = nbSommets;
-        this.sommets = sommets;
         this.cordes = cordes;
         this.cordesPossibles = new ArrayList<Corde>();
         calculCordesPossibles();
@@ -26,7 +21,6 @@ public class Polygone{
     public String toString() {
         return "Polygone{" +
                 "nbSommets=" + nbSommets +
-                ", sommets=" + Arrays.toString(sommets) +
                 ", cordes=" + cordes +
                 '}';
     }
@@ -73,59 +67,7 @@ public class Polygone{
         return cordesPossiblesElaguee;
     }
 
-    public double getSommetX (int sommet){
-        return this.sommets[sommet] [0];
-    }
 
-    public double getSommetY (int sommet){
-        return this.sommets[sommet] [1];
-    }
-
-    public double [] convertSommetsToDoubleList (){
-        double [] doubles = new double[2*this.nbSommets];
-        for(int i = 0; i < this.nbSommets; i++){
-            doubles[2*i] = this.getSommetX(i);
-            doubles[2*i +1] = this.getSommetY(i);
-        }
-        return doubles;
-    }
-
-    public ArrayList<double[]> convertSommetsToDoubleList(ArrayList<Corde> sol1) {
-        ArrayList <double []> arrayList = new ArrayList<double[]>();
-        for(Corde corde : sol1){
-            double [] doubles = {0.0, 0.0, 0.0, 0.0};
-            doubles [0] = this.getSommetX(corde.sommet1);
-            System.out.println("doubles[0] : " + doubles [0]);
-            doubles [1] = this.getSommetY(corde.sommet1);
-            System.out.println("doubles[1] : " + doubles [1]);
-            doubles [2] = this.getSommetX(corde.sommet2);
-            System.out.println("doubles[2] : " + doubles [2]);
-            doubles [3] = this.getSommetY(corde.sommet2);
-            System.out.println("doubles[3] : " + doubles [3]);
-            arrayList.add(doubles);
-        }
-        return arrayList;
-    }
-
-    public ArrayList<double[][]> convertSommetsToDoubleListForData(ArrayList<Corde> sol1) {
-        ArrayList <double [][]> arrayList = new ArrayList<double[][]>();
-        for(Corde corde : sol1){
-        double[] x1 = new double[]{this.getSommetX(corde.sommet1), this.getSommetX(corde.sommet2)};
-        double[] y1 = new double[]{this.getSommetY(corde.sommet1), this.getSommetY(corde.sommet2)};
-        double[][] data = new double[][]{x1, y1};
-        arrayList.add(data);
-        }
-        return arrayList;
-    }
-
-    public ArrayList <double []> getCordeDoubleListArrayList (){
-        ArrayList <double []> arrayList = new ArrayList<double []>();
-        for (Corde corde : this.cordes){
-            double [] doubles = {this.getSommetX(corde.sommet1), this.getSommetY(corde.sommet1), this.getSommetX(corde.sommet2), this.getSommetY(corde.sommet2)};
-            arrayList.add(doubles);
-        }
-        return arrayList;
-    }
 
     public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
         if(Math.abs(i - j) <= 1){
@@ -179,8 +121,7 @@ public class Polygone{
     }
 
     public void ajouterCorde(int sommet1, int sommet2){
-        cordes.add(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
-                Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2)))); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
+        cordes.add(new Corde(sommet1, sommet2, 0)); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
     }
 
     public void ajouterCorde(Corde corde){
@@ -195,13 +136,11 @@ public class Polygone{
     }
 
     public void ajouterCordeACordesPossibles(int sommet1, int sommet2){
-        cordesPossibles.add(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
-                Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2)))); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
+        cordesPossibles.add(new Corde(sommet1, sommet2, 0)); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
     }
 
     public void supprCorde(int sommet1, int sommet2){
-        cordes.remove(new Corde(sommet1, sommet2, Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
-                Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2))));
+        cordes.remove(new Corde(sommet1, sommet2, 0));
     }
 
     public void supprCorde(Corde corde){

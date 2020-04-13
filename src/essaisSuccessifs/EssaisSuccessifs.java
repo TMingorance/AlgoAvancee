@@ -8,6 +8,7 @@ import Plotting.XYPolygonAnnotationDemo1;
 import org.jfree.ui.RefineryUtilities;
 import structure.Corde;
 import structure.Polygone;
+import structure.PolygoneSansCoord;
 
 import java.awt.*;
 import java.awt.image.ImageObserver;
@@ -21,10 +22,10 @@ import static java.lang.Integer.min;
 
 public class EssaisSuccessifs {
 
-    private final static int nbSommets = 5;
+    private final static int nbSommets = 13;
 
-    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {22,12}, {0,10}};
-    private static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>());
+    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}, {0,10}};
+    private static PolygoneSansCoord polygone = new PolygoneSansCoord(nbSommets, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
 
 
@@ -42,6 +43,22 @@ param : un Polygone
     FPour
 Fin
  */
+
+public static void toutessolElagage(int nbCordes){
+    //calcul d'élagage pour enlever les cordes qui ont déjà été choisies dans une solution avec les cordes actuelles du polygone
+    ArrayList<Corde> ensCordeElagage = polygone.cordesPossiblesElaguee(tabSol);
+    for(Corde corde : ensCordeElagage){
+        if (polygone.validecorde(corde)) {
+            polygone.ajouterCorde(corde);
+            if (polygone.cordes.size() >= polygone.nbSommets - 3) {
+                tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
+            } else {
+                toutessolElagage(nbCordes + 1);
+            }
+            polygone.supprCorde(corde);
+        }
+    }
+}
 
 public static void toutessol(int nbCordes){
     for(Corde corde : polygone.cordesPossibles){
@@ -75,17 +92,25 @@ public static void toutessol(int nbCordes){
         }
         listX.add((double)polygone.sommets[0][0]); //on remet le premier point pour faire un polygone fermé
         listY.add((double)polygone.sommets[0][1]);
+*/
+        long startTime = System.nanoTime();
+
+
 
         //System.out.println(listX,listY);*/
         //*********Execution************
-        toutessol(1);
+        toutessolElagage(1);
         //******************************
+
+        long endTime   = System.nanoTime();
 
         System.out.println(tabSol);
 
         System.out.println("Nb de solutions : " + tabSol.size());
 
-        //System.out.println(sol1);
+        long totalTime = endTime - startTime;
+        System.out.println("Time : " + totalTime);
+/*
 
         for(ArrayList<Corde> sol : tabSol) {
             XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
@@ -96,7 +121,7 @@ public static void toutessol(int nbCordes){
         }
 
         System.out.println("Cordes possibles : " + polygone.cordesPossibles);
-
+*/
     }
 
 }
