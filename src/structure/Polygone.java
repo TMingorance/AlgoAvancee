@@ -221,4 +221,33 @@ public class Polygone{
         cordes.remove(corde);
     }
 
+    public double tailleCorde (int sommet1, int sommet2){
+        return Math.sqrt(Math.pow((this.sommets[sommet2][1] - this.sommets[sommet1] [1]),2) +
+                Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2));
+    }
+
+    public double tailleCorde (Corde corde){
+        return Math.sqrt(Math.pow((this.sommets[corde.sommet2][1] - this.sommets[corde.sommet1] [1]),2) +
+                Math.pow((this.sommets[corde.sommet2][0] - this.sommets[corde.sommet1] [0]),2));
+    }
+
+    public Polygone retirerSommet (int sommet) {
+        double[][] newSommets = new double[this.nbSommets - 1][2];
+        boolean sommetPasse = false;
+        for (int i = 0; i < this.nbSommets; i++) {
+            if (i == sommet) {
+                sommetPasse = true;
+            } else {
+                if (!sommetPasse) {
+                    newSommets[i][0] = this.sommets[i][0];
+                    newSommets[i][1] = this.sommets[i][1];
+                } else {
+                    newSommets[i - 1][0] = this.sommets[i][0];
+                    newSommets[i - 1][1] = this.sommets[i][1];
+                }
+            }
+
+        }
+        return new Polygone(this.nbSommets - 1, newSommets, this.cordes);
+    }
 }
