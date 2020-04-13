@@ -22,11 +22,13 @@ import static java.lang.Integer.min;
 
 public class EssaisSuccessifs {
 
-    private final static int nbSommets = 13;
+    private final static int nbSommets = 7;
 
-    private static double coord [] [] = {{0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}, {0,10}};
-    private static PolygoneSansCoord polygone = new PolygoneSansCoord(nbSommets, new ArrayList<Corde>());
+    //private static double coord [] [] = {{0,10}, {0,20}, {3,22}, {8,26}, {12,27}, {15,26}, {18,23}, {27,21}, {27,15}, {22,12}, {15,5}, {10,0}, {2,0}};
+    private static double coord [] [] = {{0,10}, {0,20}, {8,26}, {15,26}, {27,21}, {22,12}, {10,0}};
+    private static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
+    private static double longMin = 0;
 
 
 /*Procédure essaisSuccessifs
@@ -44,35 +46,60 @@ param : un Polygone
 Fin
  */
 
-public static void toutessolElagage(int nbCordes){
-    //calcul d'élagage pour enlever les cordes qui ont déjà été choisies dans une solution avec les cordes actuelles du polygone
-    ArrayList<Corde> ensCordeElagage = polygone.cordesPossiblesElaguee(tabSol);
-    for(Corde corde : ensCordeElagage){
-        if (polygone.validecorde(corde)) {
-            polygone.ajouterCorde(corde);
-            if (polygone.cordes.size() >= polygone.nbSommets - 3) {
-                tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
-            } else {
-                toutessolElagage(nbCordes + 1);
-            }
-            polygone.supprCorde(corde);
-        }
-    }
-}
 
-public static void toutessol(int nbCordes){
-    for(Corde corde : polygone.cordesPossibles){
-        if (polygone.validecorde(corde)) {
-            polygone.ajouterCorde(corde);
-            if (polygone.cordes.size() >= polygone.nbSommets - 3) {
-                tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
-            } else {
-                toutessol(nbCordes + 1);
+
+    public static void toutessol(int nbCordes){
+        for(Corde corde : polygone.cordesPossibles){
+            if (polygone.validecorde(corde)) {
+                polygone.ajouterCorde(corde);
+                if (nbCordes >= polygone.nbSommets - 3) {
+                    tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
+                } else {
+                    toutessol(nbCordes + 1);
+                }
+                polygone.supprCorde(corde);
             }
-            polygone.supprCorde(corde);
         }
     }
-}
+
+    public static void toutessolElagage(int nbCordes){
+        //calcul d'élagage pour enlever les cordes qui ont déjà été choisies dans une solution avec les cordes actuelles du polygone
+        ArrayList<Corde> ensCordeElagage = polygone.cordesPossiblesElaguee(tabSol);
+        for(Corde corde : ensCordeElagage){ // on utilise l'ensemble des cordes qui ne font pas déjà partie d'une solution
+            if (polygone.validecorde(corde)) {
+                polygone.ajouterCorde(corde);
+                if (nbCordes >= polygone.nbSommets - 3) {
+                    tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
+                } else {
+                    toutessolElagage(nbCordes + 1);
+                }
+                polygone.supprCorde(corde);
+            }
+        }
+    }
+
+    public static void toutessolElagageLongueur(int nbCordes) {
+        //calcul d'élagage pour enlever les cordes qui ont déjà été choisies dans une solution avec les cordes actuelles du polygone
+        //On arrête aussi de suivre une solution si sa longueur est supérieure à la longueur totale la plus petite trouvée
+        ArrayList<Corde> ensCordeElagage = polygone.cordesPossiblesElaguee(tabSol);
+        if (polygone.longueurCordes() < longMin || longMin == 0) { //à ce stade si la longueur actuelle des cordes est supérieure ou égale
+            //à la longueur totale minimale trouvée, on ne continue pas. (longMin peut ne pas être initialisé, on autorise de continuer dans ce cas).
+            for (Corde corde : ensCordeElagage) {
+                if (polygone.validecorde(corde)) {
+                    polygone.ajouterCorde(corde);
+                    if (nbCordes >= polygone.nbSommets - 3) {
+                        tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
+                        if(polygone.longueurCordes() < longMin) {
+                            longMin = polygone.longueurCordes();
+                        }
+                    } else {
+                        toutessolElagageLongueur(nbCordes + 1);
+                    }
+                    polygone.supprCorde(corde);
+                }
+            }
+        }
+    }
 
     public static void main (String [] args){
 
@@ -99,7 +126,7 @@ public static void toutessol(int nbCordes){
 
         //System.out.println(listX,listY);*/
         //*********Execution************
-        toutessolElagage(1);
+        toutessolElagageLongueur(1);
         //******************************
 
         long endTime   = System.nanoTime();
@@ -110,6 +137,8 @@ public static void toutessol(int nbCordes){
 
         long totalTime = endTime - startTime;
         System.out.println("Time : " + totalTime);
+
+        System.out.println("longMin = " + longMin);
 /*
 
         for(ArrayList<Corde> sol : tabSol) {
