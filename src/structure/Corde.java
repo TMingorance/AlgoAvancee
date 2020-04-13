@@ -13,6 +13,7 @@ public class Corde {
         this.longueur = longueur;
     }
 
+
     @Override
     public String toString() {
         return "Corde{" +

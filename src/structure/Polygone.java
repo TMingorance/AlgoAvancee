@@ -183,6 +183,11 @@ public class Polygone{
                 Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2)))); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
     }
 
+    public double distance(int sommet1, int sommet2){
+        return Math.pow((this.sommets[sommet2][0] - this.sommets[sommet1] [0]),2); //sqrt((yS2 - yS1)² + (xS2 - xS1)²)
+    }
+
+
     public double longueurCordes (){
         double somme = 0;
         for(Corde corde : this.cordes){
