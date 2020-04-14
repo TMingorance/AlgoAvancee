@@ -3,7 +3,8 @@ package structure;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class PolygoneSansCoord {
+public class PolygoneSansCoord { //sert à faire fonctionner les algorithmes avec un nombre arbitraire de sommets, sans avoir à saisir
+    //ces sommets
     public int nbSommets;
     public ArrayList<Corde> cordes;
     public ArrayList<Corde> cordesPossibles;

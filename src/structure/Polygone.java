@@ -31,7 +31,7 @@ public class Polygone{
                 '}';
     }
 
-    private ArrayList<Corde> calculCordesPossibles(){
+    private ArrayList<Corde> calculCordesPossibles(){//génère la liste des cordes que l'on peut tracer dans ce polygone
         ArrayList<Corde> arrayList = new ArrayList<Corde>();
         boolean cordeNonDoublon = true;
         for (int i = 0; i < nbSommets; i++){
@@ -81,7 +81,7 @@ public class Polygone{
         return this.sommets[sommet] [1];
     }
 
-    public double [] convertSommetsToDoubleList (){
+    public double [] convertSommetsToDoubleList (){//sert pour l'affichage de polygone
         double [] doubles = new double[2*this.nbSommets];
         for(int i = 0; i < this.nbSommets; i++){
             doubles[2*i] = this.getSommetX(i);
@@ -90,7 +90,7 @@ public class Polygone{
         return doubles;
     }
 
-    public ArrayList<double[]> convertSommetsToDoubleList(ArrayList<Corde> sol1) {
+    public ArrayList<double[]> convertSommetsToDoubleList(ArrayList<Corde> sol1) {//servait pour l'affichage de polygone
         ArrayList <double []> arrayList = new ArrayList<double[]>();
         for(Corde corde : sol1){
             double [] doubles = {0.0, 0.0, 0.0, 0.0};
@@ -107,7 +107,7 @@ public class Polygone{
         return arrayList;
     }
 
-    public ArrayList<double[][]> convertSommetsToDoubleListForData(ArrayList<Corde> sol1) {
+    public ArrayList<double[][]> convertSommetsToDoubleListForData(ArrayList<Corde> sol1) {//sert pour l'affichage
         ArrayList <double [][]> arrayList = new ArrayList<double[][]>();
         for(Corde corde : sol1){
         double[] x1 = new double[]{this.getSommetX(corde.sommet1), this.getSommetX(corde.sommet2)};
@@ -118,7 +118,7 @@ public class Polygone{
         return arrayList;
     }
 
-    public ArrayList <double []> getCordeDoubleListArrayList (){
+    public ArrayList <double []> getCordeDoubleListArrayList (){//servait pour l'affichage
         ArrayList <double []> arrayList = new ArrayList<double []>();
         for (Corde corde : this.cordes){
             double [] doubles = {this.getSommetX(corde.sommet1), this.getSommetY(corde.sommet1), this.getSommetX(corde.sommet2), this.getSommetY(corde.sommet2)};
@@ -128,14 +128,14 @@ public class Polygone{
     }
 
     public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
-        if(Math.abs(i - j) <= 1){
+        if(Math.abs(i - j) <= 1){//il n'y a pas de corde entre deux sommets adjacents
             return false;
         }
-        if(Math.abs(i - j) >= this.nbSommets - 1){
+        if(Math.abs(i - j) >= this.nbSommets - 1){//les sommets d'indices 0 et nbSommet-1 sont aussi adjacents
             return false;
         }
         for(Corde corde : this.cordes){
-            if ((corde.sommet1 == i && corde.sommet2 == j) || (corde.sommet1 == j && corde.sommet2 == i) ){
+            if ((corde.sommet1 == i && corde.sommet2 == j) || (corde.sommet1 == j && corde.sommet2 == i) ){//vérifie si la corde n'existe pas déjà
                 return false;
             }
             if ((corde.sommet1 > Integer.min(i,j) && corde.sommet1 < Integer.max(i,j) && (corde.sommet2 > Integer.max(i,j) || corde.sommet2 < Integer.min(i,j))) //si a.sommet1 in [min(i,j), max(i,j)] && a.sommet2 in [min(i,j), max(i,j)] c'est OK

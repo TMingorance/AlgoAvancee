@@ -2,8 +2,6 @@ package essaisSuccessifs;
 
 
 
-import Plotting.PlotPoly;
-import Plotting.PlotPolygoneCordes;
 import Plotting.XYPolygonAnnotationDemo1;
 import org.jfree.ui.RefineryUtilities;
 import structure.Corde;
@@ -53,12 +51,13 @@ Fin
         for(Corde corde : polygone.cordesPossibles){
             if (polygone.validecorde(corde)) {
                 polygone.ajouterCorde(corde);
-                if (nbCordes >= polygone.nbSommets - 3) {
+                if (nbCordes >= polygone.nbSommets - 3) {//arrivé à n-3 cordes, on a triangularisé le polygone
                     tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
                 } else {
-                    toutessol(nbCordes + 1);
+                    toutessol(nbCordes + 1);//si on n'arrive pas à une solution, on rajoute une corde
                 }
-                polygone.supprCorde(corde);
+                polygone.supprCorde(corde);//une fois qu'on a étudié toutes les possibilités avec la corde, on l'enlève
+                //pour passer à la suivante
             }
         }
     }
@@ -80,7 +79,6 @@ Fin
     }
 
     public static void toutessolElagageLongueur(int nbCordes, double longueurCordes) {
-        //calcul d'élagage pour enlever les cordes qui ont déjà été choisies dans une solution avec les cordes actuelles du polygone
         //On arrête aussi de suivre une solution si sa longueur est supérieure à la longueur totale la plus petite trouvée
         ArrayList<Corde> ensCordeElagage = polygone.cordesPossiblesElaguee(tabSol);
         if (longueurCordes < longMin || longMin == 0) { //à ce stade si la longueur actuelle des cordes est supérieure ou égale
@@ -88,7 +86,7 @@ Fin
             for (Corde corde : ensCordeElagage) {
                 if (polygone.validecorde(corde)) {
                     polygone.ajouterCorde(corde);
-                    longueurCordes += corde.longueur;
+                    longueurCordes += corde.longueur;//on recalcule la longueur totale de la configuration actuelle des cordes
                     if (nbCordes >= polygone.nbSommets - 3) {
                         if(longueurCordes < longMin || longMin == 0) {
                             tabSol.add((ArrayList<Corde>) polygone.cordes.clone());
@@ -99,7 +97,7 @@ Fin
                         toutessolElagageLongueur(nbCordes + 1, longueurCordes);
                     }
                     polygone.supprCorde(corde);
-                    longueurCordes -= corde.longueur;
+                    longueurCordes -= corde.longueur;//on recalcule la longueur totale de la configuration actuelle des cordes
                 }
             }
         }
@@ -146,7 +144,7 @@ Fin
 
         System.out.println("longMin = " + longMin);
 /*
-
+        //************Affichage**************
         for(ArrayList<Corde> sol : tabSol) {
             XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
                     "XYPolygonAnnotationDemo1", polygone, sol);
@@ -154,9 +152,12 @@ Fin
             //RefineryUtilities.centerFrameOnScreen(demo);
             demo.setVisible(true);
         }
+        //**********************************
+ */
+
 
         System.out.println("Cordes possibles : " + polygone.cordesPossibles);
-*/
+
     }
 
 }
