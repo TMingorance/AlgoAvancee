@@ -53,7 +53,8 @@ public class Polygone{
         return arrayList;
     }
 
-    public ArrayList<Corde> cordesPossiblesElaguee (ArrayList<ArrayList<Corde>>tabSol){
+    public ArrayList<Corde> cordesPossiblesElaguee (ArrayList<ArrayList<Corde>>tabSol){//renvoie une liste des cordes possibles
+        //auxquelles on a enlevé les cordes qui mènerons à une solution déjà trouvée
         ArrayList<Corde> cordesPossiblesElaguee = (ArrayList<Corde>)this.cordesPossibles.clone();
         boolean solElagableTrouvee = true;
         for(ArrayList<Corde> sol : tabSol){
@@ -63,7 +64,9 @@ public class Polygone{
                     solElagableTrouvee = false;
                 }
             }
-            if (solElagableTrouvee){//on enlève toutes les cordes de cette solution à cordesPossiblesElaguee
+            if (solElagableTrouvee){//on enlève toutes les cordes de cette solution à cordesPossiblesElaguee, comme cela,
+                //on ne considère ni les cordes qui sont déjà dans le polygone, ni les cordes qui amènerons à une solution
+                //déjà existante
                 for(Corde cordeSol : sol){
                     cordesPossiblesElaguee.remove(cordeSol);
                 }
@@ -231,7 +234,7 @@ public class Polygone{
                 Math.pow((this.sommets[corde.sommet2][0] - this.sommets[corde.sommet1] [0]),2));
     }
 
-    public Polygone retirerSommet (int sommet) {
+    public Polygone retirerSommet (int sommet) {///renvoie un polygone créé en retirant le sommet numéro sommet au polygone this
         double[][] newSommets = new double[this.nbSommets - 1][2];
         boolean sommetPasse = false;
         for (int i = 0; i < this.nbSommets; i++) {

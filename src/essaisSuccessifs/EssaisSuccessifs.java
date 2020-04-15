@@ -122,7 +122,7 @@ Fin
         listX.add((double)polygone.sommets[0][0]); //on remet le premier point pour faire un polygone fermé
         listY.add((double)polygone.sommets[0][1]);
 */
-        long startTime = System.nanoTime();
+        long startTime = System.nanoTime(); //pour chronomètrer l'execution
 
 
 
