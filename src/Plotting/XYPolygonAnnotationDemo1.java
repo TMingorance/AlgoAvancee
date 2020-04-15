@@ -31,7 +31,7 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
     public XYPolygonAnnotationDemo1(String title, Polygone polygone, ArrayList<Corde> sol1) {
         super(title);
         JPanel chartPanel = createDemoPanel(polygone, sol1);
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+        chartPanel.setPreferredSize(new java.awt.Dimension(500, 500));
         setContentPane(chartPanel);
     }
 
@@ -39,9 +39,17 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
      * Creates a sample dataset.
      *
      * @return The dataset.
+     * @param sol1
      */
-    public static XYDataset createDataset() {
+    public static XYDataset createDataset(ArrayList<Corde> sol1, Polygone polygone) {
         DefaultXYDataset d = new DefaultXYDataset();
+        ArrayList<double[][]> arrayList = polygone.convertSommetsToDoubleListForData(sol1);
+        int i =0;
+        for(double[][] serie : arrayList){
+            d.addSeries("Corde " + i, serie);
+            i++;
+        }
+
        /* double[] x1 = new double[]{1.7, 2.2, 2.7, 3.0};
         double[] y1 = new double[]{4.0, 3.0, 6.0, 1.0};
         double[][] data1 = new double[][]{x1, y1};
@@ -57,11 +65,10 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
      * Creates a chart.
      *
      * @param dataset the dataset.
-     * @param sol1
      * @return The chart.
      */
-    private static JFreeChart createChart(XYDataset dataset, Polygone polygone, ArrayList<Corde> sol1) {
-        JFreeChart chart = ChartFactory.createScatterPlot(
+    private static JFreeChart createChart(XYDataset dataset, Polygone polygone) {
+        JFreeChart chart = ChartFactory.createXYLineChart(
                 "XYPolygonAnnotationDemo1", "X", "Y", dataset,
                 PlotOrientation.VERTICAL, true, true, false);
 
@@ -77,18 +84,23 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
         a.setToolTipText("Polygone");
         renderer.addAnnotation(a, Layer.BACKGROUND);
 
-        ArrayList<double[]> arrayList = polygone.convertSommetsToDoubleList(sol1);
-        int i = 0;
 
-        for(double[] doubles : arrayList){
-            System.out.println("Les cordes sont : " + doubles[0] + ", " + doubles[1] + ", " + doubles[2] + ", " + doubles[3]);
+       // int i = 0;
+        //System.out.println(arrayList.get(0)[1]);
+
+       /* for(double[][] doubles : arrayList){
+            System.out.println("Les cordes sont : " + doubles[0][0] + ", " + doubles[0][1] + ", " + doubles[1][0] + ", " + doubles[1][1]);
+
             XYPolygonAnnotation cordeAnnot = new XYPolygonAnnotation(doubles, null, new Color(220,0,0,200),
                     new Color(220,0,0,200));
             cordeAnnot.setToolTipText("Corde " + i);
-            renderer.addAnnotation(cordeAnnot, Layer.FOREGROUND);
 
-            i++;
-        }
+
+
+            //renderer.addAnnotation(cordeAnnot, Layer.FOREGROUND);
+
+            //i++;
+        }*/
         return chart;
     }
 
@@ -98,7 +110,7 @@ public class XYPolygonAnnotationDemo1 extends ApplicationFrame {
      * @return A panel.
      */
     public static JPanel createDemoPanel(Polygone polygone, ArrayList<Corde> sol1) {
-        JFreeChart chart = createChart(createDataset(), polygone, sol1);
+        JFreeChart chart = createChart(createDataset(sol1, polygone), polygone);
         ChartPanel panel = new ChartPanel(chart);
         panel.setMouseWheelEnabled(true);
         return panel;
