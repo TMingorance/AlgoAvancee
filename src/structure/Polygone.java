@@ -127,7 +127,7 @@ public class Polygone{
         return arrayList;
     }
 
-    public boolean validecorde(int i, int j){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
+    public boolean validecorde(int i, int j){ //renvoie vrai si la corde entre les deux points est valide
         if(Math.abs(i - j) <= 1){//il n'y a pas de corde entre deux sommets adjacents
             return false;
         }
@@ -137,7 +137,7 @@ public class Polygone{
         for(Corde corde : this.cordes){
             if ((corde.sommet1 == i && corde.sommet2 == j) || (corde.sommet1 == j && corde.sommet2 == i) ){//vérifie si la corde n'existe pas déjà
                 return false;
-            }
+            }//ici on teste si la corde de sommets (i,j) ne coupe pas une ancienne
             if ((corde.sommet1 > Integer.min(i,j) && corde.sommet1 < Integer.max(i,j) && (corde.sommet2 > Integer.max(i,j) || corde.sommet2 < Integer.min(i,j))) //si a.sommet1 in [min(i,j), max(i,j)] && a.sommet2 in [min(i,j), max(i,j)] c'est OK
                     || ((corde.sommet1 < Integer.min(i,j) || corde.sommet1 > Integer.max(i,j)) && (corde.sommet2 > Integer.min(i,j) && corde.sommet2 < Integer.max(i,j)))){//si a.sommet1 not in [min(i,j), max(i,j)] && a.sommet2 not in [min(i,j), max(i,j)], c'est OK, sinon, non
                 return false;
@@ -146,20 +146,20 @@ public class Polygone{
         return true;
     }
 
-    public boolean validecorde(Corde corde){ //Méthode testée et approuvée, renvoie vrai si la corde entre les deux points est valide
+    public boolean validecorde(Corde corde){ //renvoie vrai si la corde entre les deux points est valide
         int i = corde.sommet1;
         int j = corde.sommet2;
 
-        if(Math.abs(i - j) <= 1){
+        if(Math.abs(i - j) <= 1){//il n'y a pas de corde entre deux sommets adjacents
             return false;
         }
-        if(Math.abs(i - j) >= this.nbSommets - 1){
+        if(Math.abs(i - j) >= this.nbSommets - 1){//les sommets d'indices 0 et nbSommet-1 sont aussi adjacents
             return false;
         }
         for(Corde cordePolygone : this.cordes){
-            if ((cordePolygone.sommet1 == i && cordePolygone.sommet2 == j) || (cordePolygone.sommet1 == j && cordePolygone.sommet2 == i) ){
+            if ((cordePolygone.sommet1 == i && cordePolygone.sommet2 == j) || (cordePolygone.sommet1 == j && cordePolygone.sommet2 == i) ){//vérifie si la corde n'existe pas déjà
                 return false;
-            }
+            }//ici on teste si la corde de sommets (i,j) ne coupe pas une ancienne
             if ((cordePolygone.sommet1 > Integer.min(i,j) && cordePolygone.sommet1 < Integer.max(i,j) && (cordePolygone.sommet2 > Integer.max(i,j) || cordePolygone.sommet2 < Integer.min(i,j))) //si a.sommet1 in [min(i,j), max(i,j)] && a.sommet2 in [min(i,j), max(i,j)] c'est OK
                     || ((cordePolygone.sommet1 < Integer.min(i,j) || cordePolygone.sommet1 > Integer.max(i,j)) && (cordePolygone.sommet2 > Integer.min(i,j) && cordePolygone.sommet2 < Integer.max(i,j)))){//si a.sommet1 not in [min(i,j), max(i,j)] && a.sommet2 not in [min(i,j), max(i,j)], c'est OK, sinon, non
                 return false;
@@ -188,7 +188,7 @@ public class Polygone{
     }
 
 
-    public double longueurCordes (){
+    public double longueurCordes (){//renvoie la somme de toutes les cordes du polygone
         double somme = 0;
         for(Corde corde : this.cordes){
             somme += corde.longueur;
