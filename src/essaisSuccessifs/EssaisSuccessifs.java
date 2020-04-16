@@ -23,7 +23,8 @@ public class EssaisSuccessifs {
     private final static int nbSommets = 5;
 
     //private static double coord [] [] = {{0,10}, {0,20}, {3,22}, {8,26}, {12,27}, {15,26}, {18,23}, {27,21}, {27,15}, {22,12}, {15,5}, {10,0}, {2,0}};
-    private static double coord [] [] = {{0,10}, {0,20}, {8,26}, {15,26}, {22,12}};
+    private static double coord [] [] = {{0,10}, {0,20}, {3,25}, {8,27}, {12,27}};
+    //private static double coord [] [] = {{0,10}, {0,20}, {3,24}, {8,27}, {12,27}, {15,26}, {18,23}, {20,21}, {22,12}, {15,5}};
     private static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>());
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
     private static double longMin = 0;
@@ -143,17 +144,17 @@ Fin
         System.out.println("Time : " + totalTime);
 
         System.out.println("longMin = " + longMin);
-/*
+
         //************Affichage**************
-        for(ArrayList<Corde> sol : tabSol) {
+        //for(ArrayList<Corde> sol : tabSol) {
             XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
-                    "XYPolygonAnnotationDemo1", polygone, sol);
+                    "XYPolygonAnnotationDemo1", polygone, tabSol.get(0));
             demo.pack();
             //RefineryUtilities.centerFrameOnScreen(demo);
             demo.setVisible(true);
-        }
+       // }
         //**********************************
- */
+
 
 
         System.out.println("Cordes possibles : " + polygone.cordesPossibles);

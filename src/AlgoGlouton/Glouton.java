@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class Glouton {
 
-    private final static int nbSommets = 5;
+    private final static int nbSommets = 7;
 
-    //private static double coord [] [] = {{0,10}, {0,20}, {3,22}, {8,26}, {12,27}, {15,26}, {18,23}, {27,21}, {27,15}, {22,12}, {15,5}, {10,0}, {2,0}};
-    private static double coord [] [] = {{0,10}, {0,20}, {8,26}, {15,26}, {22,12}};
+    private static double coord [] [] = {{0,10}, {0,20}, {3,25}, {8,27}, {12,27}, {23,21}, {27,15}};
+    //private static double coord [] [] = {{0,10}, {0,20}, {8,26}, {15,26}, {22,12}};
     private static Polygone polygonePrinc = new Polygone(nbSommets, coord, new ArrayList<Corde>());
     public static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>()); //polygone secondaire
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
@@ -50,10 +50,13 @@ public class Glouton {
 
     public static void main (String[] args){
 
+        long startTime = System.nanoTime(); //pour chronomètrer l'execution
+
         Glouton.init(Glouton.polygone);
 
         Glouton.glouton(Glouton.polygone);
 
+        long endTime = System.nanoTime();
         //********Affichage*************
         XYPolygonAnnotationDemo1 demo = new XYPolygonAnnotationDemo1(
                 "XYPolygonAnnotationDemo1", Glouton.polygonePrinc, Glouton.polygonePrinc.cordes);
@@ -63,5 +66,9 @@ public class Glouton {
         //******************************
         System.out.println("Taille de la sol pour ce polygone à " + Glouton.polygonePrinc.nbSommets + " sommets : " +
                 Glouton.polygonePrinc.longueurCordes());
+
+        long totalTime = endTime - startTime;
+        System.out.println("Time : " + totalTime);
+
     }
 }
