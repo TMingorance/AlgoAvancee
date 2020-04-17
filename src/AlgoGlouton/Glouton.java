@@ -9,12 +9,35 @@ import java.util.ArrayList;
 
 public class Glouton {
 
-    private final static int nbSommets = 7;
+    /**
+     * Création des polygones
+     * jeux de données
+     * Des points différents pour les polygones
+     */
 
-    private static double coord [] [] = {{0,10}, {0,20}, {3,25}, {8,27}, {12,27}, {23,21}, {27,15}};
-    //private static double coord [] [] = {{0,10}, {0,20}, {8,26}, {15,26}, {22,12}};
-    private static Polygone polygonePrinc = new Polygone(nbSommets, coord, new ArrayList<Corde>());
-    public static Polygone polygone = new Polygone(nbSommets, coord, new ArrayList<Corde>()); //polygone secondaire
+    private static double coord13[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {27, 21}, {27, 15}, {25, 12}, {18, 5}, {14, 2}, {10, 0}, {2, 0}};
+    private static double coord12[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {27, 21}, {27, 15}, {25, 12}, {18, 5}, {10, 0}, {2, 0}};
+    private static double coord11[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {27, 21}, {25, 12}, {18, 5}, {10, 0}, {2, 0}};
+    private static double coord10[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {25, 12}, {18, 5}, {10, 0}, {2, 0}};
+    private static double coord9[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {18, 5}, {10, 0}, {2, 0}};
+    private static double coord8[][] = {{0, 10}, {0, 20}, {8, 26}, {12, 27.6}, {15, 28}, {18, 27}, {18, 5}, {10, 0}};
+    private static double coord7[][] = {{0, 20}, {8, 26}, {15, 26}, {27, 21}, {22, 12}, {10, 0}, {0, 10}};
+    private static double coord6[][] = {{0, 10}, {8, 26}, {15, 28}, {18, 27}, {18, 5}, {10, 0}};
+    private static double coord5[][] = {{0, 20}, {8, 26}, {15, 26}, {22, 12}, {10, 0}};
+
+    private static Polygone tridecagone = new Polygone(coord13.length, coord13, new ArrayList<Corde>());
+    private static Polygone dodecagone = new Polygone(coord12.length, coord12, new ArrayList<Corde>());
+    private static Polygone hendagone = new Polygone(coord11.length, coord11, new ArrayList<Corde>());
+    private static Polygone decagone = new Polygone(coord10.length, coord10, new ArrayList<Corde>());
+    private static Polygone nonagone = new Polygone(coord9.length, coord9, new ArrayList<Corde>());
+    private static Polygone octogone = new Polygone(coord8.length, coord8, new ArrayList<Corde>());
+    private static Polygone heptagone = new Polygone(coord7.length, coord7, new ArrayList<Corde>());
+    private static Polygone hexagone = new Polygone(coord6.length, coord6, new ArrayList<Corde>());
+    private static Polygone pentagone = new Polygone(coord5.length, coord5, new ArrayList<Corde>());
+
+
+    private static Polygone polygonePrinc = new Polygone(pentagone.nbSommets, pentagone.sommets, new ArrayList<Corde>());
+    public static Polygone polygone = new Polygone(pentagone.nbSommets, pentagone.sommets, new ArrayList<Corde>()); //polygone secondaire
     private static ArrayList<ArrayList <Corde>> tabSol = new ArrayList <ArrayList<Corde>> ();
     private static double longMin = 0;
     private static ArrayList<Double> longueursSol = new ArrayList<Double>();
