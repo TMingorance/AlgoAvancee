@@ -14,6 +14,10 @@
           <option name="url" value="https://github.com/TMingorance/AlgoAvancee.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="http://90.102.104.109/users/sign_in" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
     <option name="cloneParentDir" value="C:\Users\theom\IdeaProjects" />
